@@ -11,7 +11,9 @@ export default {
   },
   rules: {
     ...pluginJs.configs.recommended.rules,
-    indent: ["warn", 2], 
+    "indent": ["warn", 2],
     "no-unused-vars": "warn",
-  },
+    "camelcase": ["warn", { "properties": "always" }],
+    'no-use-before-define': ['error', { functions: false, classes: true, variables: true }] 
+  }
 };
