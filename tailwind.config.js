@@ -5,6 +5,10 @@ module.exports = {
     extend: {
       fontFamily: {
         "space": ["Space Grotesk", "sans-serif"],
+      },
+      colors: {
+        "customPurple": "hsl(278, 94%, 30%)",
+        "customBlue": "hsl(249, 99%, 64%)"
       }
     },
   },

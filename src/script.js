@@ -90,6 +90,60 @@ const inputCvcNumber = function formatCvcNumberOnCard(event) {
 // prettier-ignore
 document.getElementById("cvc").addEventListener("input", inputCvcNumber);
 
+// Format name on the card
+const inputCardholderName = function formatNameOnTheCard(event) {
+  const input = event.target.value;
+
+  if (input.trim() === "") {
+    document.getElementById("oncardname").textContent = "JANE APPLESEED";
+    return;
+  }
+
+  document.getElementById("oncardname").textContent = input.toUpperCase();
+};
+// prettier-ignore
+document.getElementById("cardholder").addEventListener("input", inputCardholderName);
+
+// Format the expiration date on the card
+const inputExpDate = function formatExpDateOnTheCard(event) {
+  const input = event.target.value;
+
+  const format = ["00"];
+  for (let i = 0; i < input.length; i++) {
+    if (i < format.length * 2) {
+      const charIndex = i % 2;
+      format[Math.floor(i / 2)] =
+        format[Math.floor(i / 2)].substr(0, charIndex) +
+        input[i] +
+        format[Math.floor(i / 2)].substr(charIndex + 1);
+    }
+  }
+
+  document.getElementById("oncardexpdate").textContent = format;
+};
+// prettier-ignore
+document.getElementById("expdate").addEventListener("input", inputExpDate);
+
+// Format the expiration year on the card
+const inputExpYear = function formatExpYearOnTheCard(event) {
+  const input = event.target.value;
+
+  const format = ["00"];
+  for (let i = 0; i < input.length; i++) {
+    if (i < format.length * 2) {
+      const charIndex = i % 2;
+      format[Math.floor(i / 2)] =
+        format[Math.floor(i / 2)].substr(0, charIndex) +
+        input[i] +
+        format[Math.floor(i / 2)].substr(charIndex + 1);
+    }
+  }
+
+  document.getElementById("oncardexpyear").textContent = format;
+};
+// prettier-ignore
+document.getElementById("expyear").addEventListener("input", inputExpYear);
+
 // Display error message when a field is empty
 const displayErrorMessage = function displayErrorMessageWhenBlank(
   event,
@@ -162,7 +216,7 @@ const removeErrorMessage = function removeErrorMessageWhenNotBlank(
   const input = document.getElementById(inputId);
 
   if (!checkIfEmpty(event.target.value)) {
-    input.style.border = "1px solid black";
+    input.style.border = "1px solid grey";
 
     if (container.children.length > 0) {
       container.removeChild(container.children[0]);
@@ -189,8 +243,8 @@ const removeErrorMessageForExpDate = function removeErrorMessageForExpDate() {
   const container = document.getElementById("error-container-exp");
 
   if (!checkIfEmpty(dateField.value) && !checkIfEmpty(yearField.value)) {
-    dateField.style.border = "1px solid black";
-    yearField.style.border = "1px solid black";
+    dateField.style.border = "1px solid grey";
+    yearField.style.border = "1px solid grey";
 
     if (container.children.length > 0) {
       container.removeChild(container.children[0]);
@@ -264,27 +318,28 @@ document.getElementById("expyear").addEventListener("keypress", onlyAllowNumbers
 document.getElementById("cvc").addEventListener("keypress", onlyAllowNumbers);
 
 // Display error message when the date format is incorrect
-const displayErrorMessageForDateFormat = function displayErrorMessageForDateFormat() {
-  const dateField = document.getElementById("expdate");
-  const yearField = document.getElementById("expyear");
-  const container = document.getElementById("error-container-exp");
+const displayErrorMessageForDateFormat =
+  function displayErrorMessageForDateFormat() {
+    const dateField = document.getElementById("expdate");
+    const yearField = document.getElementById("expyear");
+    const container = document.getElementById("error-container-exp");
 
-  if (checkIfDateFormatIsCorrect()) {
-    dateField.style.border = "1px solid red";
-    yearField.style.border = "1px solid red";
+    if (checkIfDateFormatIsCorrect()) {
+      dateField.style.border = "1px solid red";
+      yearField.style.border = "1px solid red";
 
-    if (container.children.length > 0) {
-      container.removeChild(container.children[0]);
+      if (container.children.length > 0) {
+        container.removeChild(container.children[0]);
+      }
+
+      const errorMessage = document.createElement("p");
+      errorMessage.textContent = "Invalid date";
+      errorMessage.style.color = "red";
+      errorMessage.style.fontSize = "0.8rem";
+
+      container.appendChild(errorMessage);
     }
-
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = "Invalid date";
-    errorMessage.style.color = "red";
-    errorMessage.style.fontSize = "0.8rem";
-
-    container.appendChild(errorMessage);
-  }
-};
+  };
 // prettier-ignore
 document.getElementById("expdate").addEventListener("input", displayErrorMessageForDateFormat);
 // prettier-ignore
@@ -313,3 +368,67 @@ const displayErrorMessageForDate = function displayErrorMessageForDate(event) {
 document.getElementById("expdate").addEventListener("input", displayErrorMessageForDate);
 // prettier-ignore
 document.getElementById("expyear").addEventListener("input", displayErrorMessageForDate);
+
+// Validate the form
+const validateForm = function validateForm() {
+  const cardholder = document.getElementById("cardholder");
+  const cardNumber = document.getElementById("cardnumber");
+  const cvc = document.getElementById("cvc");
+  const date = document.getElementById("expdate");
+  const year = document.getElementById("expyear");
+
+  if (
+    checkIfEmpty(cardholder.value) ||
+    checkIfEmpty(cardNumber.value) ||
+    checkIfEmpty(cvc.value) ||
+    checkIfEmpty(date.value) ||
+    checkIfEmpty(year.value) ||
+    checkIfContainsNumbers(cardholder.value) ||
+    checkIfContainsLetters(cardNumber.value) ||
+    checkIfDateFormatIsCorrect()
+  ) {
+    return false;
+  }
+
+  return true;
+};
+// prettier-ignore
+document.getElementById("submit").addEventListener("click", (event) => {
+  if (!validateForm()) {
+    event.preventDefault();
+  }
+});
+
+// Check if cardnumber is valid
+const checkIfCardNumberIsValid = function checkIfCardNumberIsValid() {
+  const cardNumber = document.getElementById("cardnumber").value.replace(/\s+/g, "");
+
+  if (cardNumber.length < 16) {
+    return false;
+  }
+
+  return true;
+};
+// prettier-ignore
+document.getElementById("submit").addEventListener("click", (event) => {
+  if (!checkIfCardNumberIsValid()) {
+    event.preventDefault();
+  }
+});
+
+// Check if cvc is valid
+const checkIfCvcIsValid = function checkIfCvcIsValid() {
+  const cvc = document.getElementById("cvc").value;
+
+  if (cvc.length < 3) {
+    return false;
+  }
+
+  return true;
+};
+// prettier-ignore
+document.getElementById("submit").addEventListener("click", (event) => {
+  if (!checkIfCvcIsValid()) {
+    event.preventDefault();
+  }
+});

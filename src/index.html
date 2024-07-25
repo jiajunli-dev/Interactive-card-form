@@ -30,24 +30,40 @@
     >
       <div class="relative mb-8">
         <img src="../images/bg-card-front.png" alt="logo" />
-        <div class="absolute bottom-10 m-2 w-10/12 bg-slate-500">
-          <div class="mb-4 bg-gray-400">
-            <p id="formattedCardNumber">0000 0000 0000 0000</p>
+        <div class="absolute bottom-10 ml-7 w-10/12">
+          <img src="../images/card-logo.svg" alt="logo" class="mb-14" />
+          <div class="mb-4">
+            <p
+              id="formattedCardNumber"
+              class="text-2xl font-normal tracking-widest"
+            >
+              0000 0000 0000 0000
+            </p>
           </div>
-          <div class="flex bg-slate-300">
-            <div class="bg-red-500 w-10/12">
-              <p>FELAICIA LEIRE</p>
+          <div class="flex">
+            <div class="w-9/12">
+              <p id="oncardname" class="font-thin tracking-widest">
+                JANE APPLESEED
+              </p>
             </div>
-            <div>
-              <p class="bg-blue-500">00/00</p>
+            <div class="flex">
+              <p id="oncardexpdate" class="text-sm font-thin tracking-widest">
+                00
+              </p>
+              <p class="text-xs">/</p>
+              <p id="oncardexpyear" class="text-sm font-thin tracking-widest">
+                00
+              </p>
             </div>
           </div>
         </div>
       </div>
       <div class="relative ml-16 flex justify-center">
         <img src="../images/bg-card-back.png" alt="logo" />
-        <div class="absolute bottom-28 flex w-9/12 justify-end bg-slate-400">
-          <p id="formattedCvcNumber">000</p>
+        <div class="absolute bottom-24 mb-4 flex w-9/12 justify-end">
+          <p id="formattedCvcNumber" class="text-sm font-thin tracking-widest">
+            000
+          </p>
         </div>
       </div>
     </div>
@@ -59,28 +75,28 @@
       </div>
       <div class="flex w-2/3 items-center justify-center">
         <div class="">
-          <form id="my-form">
+          <form id="my-form" action="success.html">
             <div>
-              <p>Cardholder Name</p>
+              <p class="text-xs tracking-widest">CARDHOLDER NAME</p>
               <input
                 type="text"
                 name="cardholder"
                 id="cardholder"
                 placeholder="e.g. Jane Appleseed"
-                class="w-full border input"
+                class="input w-full rounded-md border-2 hover:border-customBlue p-2"
                 maxlength="20"
                 required
               />
             </div>
-            <div id="error-container-cardholder" class="min-h-5"></div>
+            <div id="error-container-cardholder" class="min-h-5 h-full"></div>
             <div>
-              <p>Card Number</p>
+              <p class="text-xs tracking-widest">CARD NUMBER</p>
               <input
                 type="text"
                 name="cardnumber"
                 id="cardnumber"
                 placeholder="e.g. 1234 5678 9123 0000"
-                class="w-full border input"
+                class="input w-full rounded-md border-2 hover:border-customBlue p-2"
                 maxlength="19"
                 required
               />
@@ -88,13 +104,13 @@
             </div>
             <div class="flex gap-3">
               <div>
-                <p>Exp. Date (MM/YY)</p>
+                <p class="text-xs tracking-widest">EXP. DATE (MM/YY)</p>
                 <input
                   type="number"
                   name="expdate"
                   id="expdate"
                   placeholder="MM"
-                  class="mr-1 w-20 border input"
+                  class="input mr-1 w-20 rounded-md border-2 hover:border-customBlue p-2"
                   maxlength="2"
                   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                   required
@@ -104,20 +120,20 @@
                   name="expyear"
                   id="expyear"
                   placeholder="YY"
-                  class="w-20 border input"
+                  class="input w-20 rounded-md border-2 hover:border-customBlue p-2"
                   maxlength="2"
                   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                   required
                 />
               </div>
               <div>
-                <p>CVC</p>
+                <p class="text-xs tracking-widest">CVC</p>
                 <input
                   type="number"
                   name="cvc"
                   id="cvc"
                   placeholder="e.g. 123"
-                  class="w-36 border input"
+                  class="input w-36 rounded-md border-2 hover:border-customBlue p-2"
                   maxlength="3"
                   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                   required
@@ -125,13 +141,14 @@
               </div>
             </div>
             <div class="flex">
-              <div id="error-container-exp" class="w-4/5 min-h-5"></div>
-              <div id="error-container-cvc" class="w-2/3 ml-3 min-h-5"></div>
+              <div id="error-container-exp" class="min-h-5 w-4/5"></div>
+              <div id="error-container-cvc" class="ml-3 min-h-5 w-2/3"></div>
             </div>
             <input
               type="submit"
+              id="submit"
               value="Confirm"
-              class="w-full cursor-pointer bg-[#220930] text-white"
+              class="w-full cursor-pointer bg-[#220930] text-white p-2 rounded-md"
             />
           </form>
         </div>
